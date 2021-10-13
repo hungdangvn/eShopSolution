@@ -4,19 +4,23 @@ using eShopSolution.ViewModels.Catalog.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eShopSolution.AdminApp.Controllers
 {
     public class ProductController : BaseController
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly ICategoryApiClient _categoryApiClient;
 
-        public ProductController(IProductApiClient productApiClient)
+        public ProductController(IProductApiClient productApiClient, ICategoryApiClient categoryApiClient)
         {
             _productApiClient = productApiClient;
+            _categoryApiClient = categoryApiClient;
         }
 
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 5)
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 5)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
             //B2. Dựng request
@@ -25,10 +29,18 @@ namespace eShopSolution.AdminApp.Controllers
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                LanguageId = languageId
+                LanguageId = languageId,
+                CategoryId = categoryId
             };
             var data = await _productApiClient.GetPagings(request);   //Controller sử dụng Service của Project AdminApp để gửi request, lấy về PagedResult<UserViewModel> tạo View
             ViewBag.Keyword = keyword; //Chuyển keyword ra view để tái hiện lại trên textbox Search
+            var categories = await _categoryApiClient.GetAll(languageId);
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.Id //keep Selected mỗi khi submit
+            });
             if (TempData["result"] != null) //Nhận TempData["result"] được redirect từ các method Create, Update, Delete
             {
                 ViewBag.Msg = TempData["result"];

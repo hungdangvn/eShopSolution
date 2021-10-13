@@ -80,19 +80,19 @@ namespace eShopSolution.Application.Catalog.Products
             //1. query join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        //join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        //join c in _context.Catergories on pic.CategoryId equals c.Id
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId
+                        join c in _context.Catergories on pic.CategoryId equals c.Id
                         where pt.LanguageId == request.LanguageId
-                        select new { p, pt };
+                        select new { p, pt, pic };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            //if (request.CategoryIds != null && request.CategoryIds.Count > 0)
-            //{
-            //    query = query.Where(x => request.CategoryIds.Contains(x.pic.CategoryId));
-            //}
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(x => request.CategoryId == x.pic.CategoryId);
+            }
             //3. Paging
             int totalRow = await query.CountAsync();
             //VD muon lay trang 2 pageIndex = 2 thì Skip (2-1)*10 = 10 records và Take 10 record tiếp theo

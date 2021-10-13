@@ -35,7 +35,8 @@ namespace eShopSolution.AdminApp.Sevices
                 $"/api/products/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
                 $"&keyword={request.Keyword}" +
-                $"&languageId={request.LanguageId}");
+                $"&languageId={request.LanguageId}" +
+                $"&categoryId={request.CategoryId}");
 
             return data;
         }
