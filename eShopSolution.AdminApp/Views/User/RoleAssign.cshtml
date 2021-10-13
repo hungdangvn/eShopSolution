@@ -1,0 +1,67 @@
+﻿@model eShopSolution.ViewModels.System.Users.RoleAssignRequest
+
+@{
+    ViewData["Title"] = "RoleAssign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Cập nhật quyền người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Cập nhật quyền người dùng</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Index" asp-controller="User">Danh sách người dùng</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>}
+            </div>
+            <div class="row">
+                <form asp-action="RoleAssign">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" /> @*id cua user tu trang index truyen qua*@
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Quyền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < Model.Roles.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Model.Roles[i].Name</td>
+                                        <td>
+                                            <input type="checkbox" asp-for="Roles[i].Selected" />
+                                            <input type="hidden" asp-for="Roles[i].Id" />
+                                            <input type="hidden" asp-for="Roles[i].Name" />
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Lưu lại" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
