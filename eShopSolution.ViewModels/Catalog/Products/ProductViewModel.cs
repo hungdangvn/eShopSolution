@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eShopSolution.ViewModels.Catalog.Categories;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
     {
         //From Product
         public int Id { get; set; }
+
         public decimal Price { get; set; }
         public decimal OriginalPrice { get; set; }
         public int Stock { get; set; }
@@ -16,6 +18,7 @@ namespace eShopSolution.ViewModels.Catalog.Products
 
         //from ProductTranslation
         public string Name { set; get; }
+
         public string Description { set; get; }
         public string Details { set; get; }
         public string SeoDescription { set; get; }
@@ -23,5 +26,6 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
 
+        public List<string> Categories { get; set; }
     }
 }

@@ -137,5 +137,20 @@ namespace eShopSolution.BackendApi.Controllers
             if (image == null) return BadRequest("Cannot find product");
             return Ok(image);
         }
+
+        [HttpPut("{id}/categories")]        //Lay id tren URL
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _productService.CategoryAssisgn(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result); //Tra ve doi tuong de phia client xem xet
+        }
     }
 }

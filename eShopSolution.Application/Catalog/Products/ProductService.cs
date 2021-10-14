@@ -80,19 +80,21 @@ namespace eShopSolution.Application.Catalog.Products
             //1. query join
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
-                        //join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        //join c in _context.Catergories on pic.CategoryId equals c.Id
+                        join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic //thực hiện Products leftjoin ProductInCategories
+                        from pic in ppic.DefaultIfEmpty()
+                        join c in _context.Catergories on pic.CategoryId equals c.Id into picc // thực hiện Catergories leftjoin ProductInCategories
+                        from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId
-                        select new { p, pt };
+                        select new { p, pt, pic };
             //2. filter
             if (!string.IsNullOrEmpty(request.Keyword))
             {
                 query = query.Where(x => x.pt.Name.Contains(request.Keyword));
             }
-            //if (request.CategoryIds != null && request.CategoryIds.Count > 0)
-            //{
-            //    query = query.Where(x => request.CategoryIds.Contains(x.pic.CategoryId));
-            //}
+            if (request.CategoryId != null && request.CategoryId != 0)
+            {
+                query = query.Where(x => request.CategoryId == x.pic.CategoryId);
+            }
             //3. Paging
             int totalRow = await query.CountAsync();
             //VD muon lay trang 2 pageIndex = 2 thì Skip (2-1)*10 = 10 records và Take 10 record tiếp theo
@@ -245,7 +247,11 @@ namespace eShopSolution.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         where p.Id == productId && pt.LanguageId == languageId
                         select new { p, pt };
-
+            var categories = await (from c in _context.Catergories
+                                    join ct in _context.CategoryTranslations on c.Id equals ct.CategoryId
+                                    join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
+                                    where pic.ProductId == productId && ct.LanguageId == languageId
+                                    select ct.Name).ToListAsync();
             //2. Map vao obj ProductViewModel
             var productVM = await query.Select(x => new ProductViewModel()
             {
@@ -261,7 +267,8 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoDescription = x.pt.SeoDescription,
                 SeoTitle = x.pt.SeoTitle,
                 Stock = x.p.Stock,
-                ViewCount = x.p.ViewCount
+                ViewCount = x.p.ViewCount,
+                Categories = categories
             }).FirstOrDefaultAsync();
 
             return productVM;
@@ -356,6 +363,34 @@ namespace eShopSolution.Application.Catalog.Products
                 SortOrder = productImage.SortOrder
             };
             return viewModel;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssisgn(int productId, CategoryAssignRequest request)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            if (product == null) throw new eShopException($"Cannot find a product: {productId}");
+
+            foreach (var category in request.Categories)
+            {
+                var productInCategory = await _context.ProductInCategories.FirstOrDefaultAsync(x => x.ProductId == productId && x.CategoryId == int.Parse(category.Id));
+
+                if (productInCategory != null && category.Selected == false) //Kiem tra nếu product đang được gán category, category ko duoc chon
+                {
+                    _context.ProductInCategories.Remove(productInCategory); // thì bỏ gán
+                }
+                else if (productInCategory == null && category.Selected == true) //Kiem tra nếu product đang chưa được gán category,
+                {
+                    productInCategory = new ProductInCategory()
+                    {
+                        ProductId = productId,
+                        CategoryId = int.Parse(category.Id)
+                    };
+                    _context.ProductInCategories.Add(productInCategory);  //thì gán vào
+                }
+            }
+
+            await _context.SaveChangesAsync();
+            return new ApiResultSuccess<bool>();
         }
     }
 }

@@ -28,8 +28,13 @@
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
                         <div class="row">
-                            <div class="col-md-9 col-xs-12">
+                            <div class="col-md-4 col-xs-12">
                                 <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                    <option>-- Chọn danh mục --</option>
+                                </select>
                             </div>
                             <div class="cold-md-3 col-xs-12">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
@@ -64,7 +69,7 @@
                     <tbody>
                         @foreach (var item in Model.Items)
                         {
-                            <tr>                                
+                            <tr>
                                 <td>@Html.DisplayFor(modelItem => item.Id)</td>
                                 <td>@Html.DisplayFor(modelItem => item.Name)</td>
                                 <td>@Html.DisplayFor(modelItem => item.OriginalPrice)</td>
@@ -73,7 +78,8 @@
                                 <td>
                                     @Html.ActionLink("Sửa", "Update", new { id = item.Id }) |
                                     @Html.ActionLink("Xem", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
+                                    @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                    @Html.ActionLink("Gán danh mục", "CategoryAssign", new { id = item.Id })
                                 </td>
                             </tr>
                             count = count + 1;
