@@ -10,7 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace eShopSolution.AdminApp.Sevices
+namespace eShopSolution.ApiIntergration
 {
     public class LanguageApiClient : BaseApiClient, ILanguageApiClient //Kế thừa trước, implement sau
     {

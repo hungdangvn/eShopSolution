@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 //using Microsoft.AspNetCore.Http;
 
-namespace eShopSolution.AdminApp.Sevices
+namespace eShopSolution.ApiIntergration
 {
     public class UserApiClient : IUserApiClient
     {

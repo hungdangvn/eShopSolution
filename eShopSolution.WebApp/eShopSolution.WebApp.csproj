@@ -13,4 +13,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eShopSolutiom.ApiIntergaration\eShopSolution.ApiIntergration.csproj" />
+  </ItemGroup>
+
 </Project>
