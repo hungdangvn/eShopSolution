@@ -11,12 +11,16 @@ namespace eShopSolution.Data.Entities
     {
         //Các thuộc tính của bảng Product
         public int Id { get; set; }
+
         public decimal Price { get; set; }
         public decimal OriginalPrice { get; set; }
         public int Stock { get; set; }
         public int ViewCount { get; set; }
         public DateTime DateCreated { get; set; }
+
+        public bool? IsFeatured { get; set; }
         public string SeoAlias { get; set; }
+
         //Các mối quan hệ ràng buộc với bảng Product
         public List<ProductInCategory> ProductInCategories { get; set; } //1 Product thuoc nhieu Catergory (có nhiều dòng trong ProductInCatergories)
 
