@@ -10,4 +10,5 @@
 ## How to contribute
 ## Portal template https://www.free-css.com/free-css-templates/page194/bootstrap-shop
 ## I18N (internalizaton)
-- Reference: https://medium.com/swlh/step-by-step-tutorial-to-build-multi-cultural-asp-net-core-web-app-3fac9a960c43
+- Reference: https://ziyad.info/en/articles/36-Develop_Multi_Cultural_Web_Application_Using_ExpressLocalization
+- sourcecode: https://github.com/LazZiya/ExpressLocalizationSampleCore3
