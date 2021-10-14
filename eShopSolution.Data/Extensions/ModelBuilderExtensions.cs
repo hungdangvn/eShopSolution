@@ -20,9 +20,9 @@ namespace eShopSolution.Data.Extensions
                );
 
             modelBuilder.Entity<Language>().HasData(
-                new Language() { Id = "vi-VN", Name = "Tiếng Việt", IsDefault = true },
-                new Language() { Id = "en-US", Name = "Tiếng Anh", IsDefault = false },
-                new Language() { Id = "ru-RU", Name = "Tiếng Nga", IsDefault = false }
+                new Language() { Id = "vi", Name = "Tiếng Việt", IsDefault = true },
+                new Language() { Id = "en", Name = "English", IsDefault = false },
+                new Language() { Id = "ru", Name = "Russian", IsDefault = false }
                 );
 
             modelBuilder.Entity<Category>().HasData(
@@ -43,12 +43,12 @@ namespace eShopSolution.Data.Extensions
                     Status = Enums.Status.Active,
                 });
             modelBuilder.Entity<CategoryTranslation>().HasData(
-                new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Sơ mi nam", LanguageId = "vi-VN", SeoAlias = "so-mi-nam", SeoDescription = "Sản phẩm thời trang nam", SeoTitle = "Sản phẩm thời trang nam" },
-                new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en-US", SeoAlias = "men-shirt", SeoDescription = "The shirt product for men", SeoTitle = "The shirt product for men" },
-                new CategoryTranslation() { Id = 3, CategoryId = 1, Name = "Мужская рубашка", LanguageId = "ru-RU", SeoAlias = "Мужская-рубашка", SeoDescription = "Рубашка мужская", SeoTitle = "Рубашка мужская" },
-                new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Váy nữ", LanguageId = "vi-VN", SeoAlias = "vay-nu", SeoDescription = "Sản phẩm thời trang nữ", SeoTitle = "Sản phẩm thời trang nữ" },
-                new CategoryTranslation() { Id = 5, CategoryId = 2, Name = "Women dress", LanguageId = "en-US", SeoAlias = "women-dress", SeoDescription = "The dress product for women", SeoTitle = "The dress product for women" },
-                new CategoryTranslation() { Id = 6, CategoryId = 2, Name = "Женское платье", LanguageId = "ru-RU", SeoAlias = "Женское-платье", SeoDescription = "Женское платье", SeoTitle = "Женское платье" }
+                new CategoryTranslation() { Id = 1, CategoryId = 1, Name = "Sơ mi nam", LanguageId = "vi", SeoAlias = "so-mi-nam", SeoDescription = "Sản phẩm thời trang nam", SeoTitle = "Sản phẩm thời trang nam" },
+                new CategoryTranslation() { Id = 2, CategoryId = 1, Name = "Men Shirt", LanguageId = "en", SeoAlias = "men-shirt", SeoDescription = "The shirt product for men", SeoTitle = "The shirt product for men" },
+                new CategoryTranslation() { Id = 3, CategoryId = 1, Name = "Мужская рубашка", LanguageId = "ru", SeoAlias = "Мужская-рубашка", SeoDescription = "Рубашка мужская", SeoTitle = "Рубашка мужская" },
+                new CategoryTranslation() { Id = 4, CategoryId = 2, Name = "Váy nữ", LanguageId = "vi", SeoAlias = "vay-nu", SeoDescription = "Sản phẩm thời trang nữ", SeoTitle = "Sản phẩm thời trang nữ" },
+                new CategoryTranslation() { Id = 5, CategoryId = 2, Name = "Women dress", LanguageId = "en", SeoAlias = "women-dress", SeoDescription = "The dress product for women", SeoTitle = "The dress product for women" },
+                new CategoryTranslation() { Id = 6, CategoryId = 2, Name = "Женское платье", LanguageId = "ru", SeoAlias = "Женское-платье", SeoDescription = "Женское платье", SeoTitle = "Женское платье" }
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product()
@@ -72,12 +72,12 @@ namespace eShopSolution.Data.Extensions
                     ViewCount = 0
                 });
             modelBuilder.Entity<ProductTranslation>().HasData(
-                new ProductTranslation() { Id = 1, ProductId = 1, Name = "Áo sơ mi nam trắng Việt Tiến", LanguageId = "vi-VN", SeoAlias = "ao-so-mi-nam-trang-viet-tien", SeoDescription = "Sản phẩm thời trang nam", SeoTitle = "Sản phẩm thời trang nam", Details = "Mô tả sản phẩm", Description = "" },
-                new ProductTranslation() { Id = 2, ProductId = 1, Name = "Viet Tien men shirt", LanguageId = "en-US", SeoAlias = "viet-tien-men-shirt", SeoDescription = "The shirt product for men", SeoTitle = "The shirt product for men", Details = "Product description", Description = "" },
-                new ProductTranslation() { Id = 3, ProductId = 1, Name = "Мужская рубашка", LanguageId = "ru-RU", SeoAlias = "viet-tien-Мужская-рубашка", SeoDescription = "Рубашка мужская", SeoTitle = "Рубашка мужская", Details = "Описание продукта", Description = "" },
-                new ProductTranslation() { Id = 4, ProductId = 2, Name = "Váy hồng Việt Fashion", LanguageId = "vi-VN", SeoAlias = "vay-hong-viet-fashion", SeoDescription = "Sản phẩm thời trang nữ", SeoTitle = "Sản phẩm thời trang nữ", Details = "Mô tả sản phẩm", Description = "" },
-                new ProductTranslation() { Id = 5, ProductId = 2, Name = "Viet fashio pink dress", LanguageId = "en-US", SeoAlias = "viet-fashio-pink-dress", SeoDescription = "The dress product for women", SeoTitle = "The dress product for women", Details = "Product description", Description = "" },
-                new ProductTranslation() { Id = 6, ProductId = 2, Name = "Розовое платье вьетнамской моды", LanguageId = "ru-RU", SeoAlias = "Розовое-платье-вьетнамской-моды", SeoDescription = "Женское платье", SeoTitle = "Женское платье", Details = "Описание продукта", Description = "" }
+                new ProductTranslation() { Id = 1, ProductId = 1, Name = "Áo sơ mi nam trắng Việt Tiến", LanguageId = "vi", SeoAlias = "ao-so-mi-nam-trang-viet-tien", SeoDescription = "Sản phẩm thời trang nam", SeoTitle = "Sản phẩm thời trang nam", Details = "Mô tả sản phẩm", Description = "" },
+                new ProductTranslation() { Id = 2, ProductId = 1, Name = "Viet Tien men shirt", LanguageId = "en", SeoAlias = "viet-tien-men-shirt", SeoDescription = "The shirt product for men", SeoTitle = "The shirt product for men", Details = "Product description", Description = "" },
+                new ProductTranslation() { Id = 3, ProductId = 1, Name = "Мужская рубашка", LanguageId = "ru", SeoAlias = "viet-tien-Мужская-рубашка", SeoDescription = "Рубашка мужская", SeoTitle = "Рубашка мужская", Details = "Описание продукта", Description = "" },
+                new ProductTranslation() { Id = 4, ProductId = 2, Name = "Váy hồng Việt Fashion", LanguageId = "vi", SeoAlias = "vay-hong-viet-fashion", SeoDescription = "Sản phẩm thời trang nữ", SeoTitle = "Sản phẩm thời trang nữ", Details = "Mô tả sản phẩm", Description = "" },
+                new ProductTranslation() { Id = 5, ProductId = 2, Name = "Viet fashio pink dress", LanguageId = "en", SeoAlias = "viet-fashio-pink-dress", SeoDescription = "The dress product for women", SeoTitle = "The dress product for women", Details = "Product description", Description = "" },
+                new ProductTranslation() { Id = 6, ProductId = 2, Name = "Розовое платье вьетнамской моды", LanguageId = "ru", SeoAlias = "Розовое-платье-вьетнамской-моды", SeoDescription = "Женское платье", SeoTitle = "Женское платье", Details = "Описание продукта", Description = "" }
                 );
             modelBuilder.Entity<ProductInCategory>().HasData(
                 new ProductInCategory() { ProductId = 1, CategoryId = 1 },
@@ -90,7 +90,8 @@ namespace eShopSolution.Data.Extensions
 
             modelBuilder.Entity<AppRole>().HasData(
                 new AppRole() { Id = ROLE_ID, Name = "admin", NormalizedName = "admin", Description = "Administrator role" },
-                new AppRole() { Id = new Guid("C649E019-9887-4739-9404-A0DDD827690D"), Name = "moderator", NormalizedName = "moderator", Description = "Kiem duyet role" }
+                new AppRole() { Id = new Guid("C649E019-9887-4739-9404-A0DDD827690D"), Name = "moderator", NormalizedName = "moderator", Description = "Kiem duyet role" },
+                new AppRole() { Id = new Guid("3D474CD6-912B-4DF7-BBD9-DA31FA3061C6"), Name = "user", NormalizedName = "user", Description = "user using app" }
                 );
 
             var hasher = new PasswordHasher<AppUser>();
@@ -102,7 +103,7 @@ namespace eShopSolution.Data.Extensions
                 Email = "dangmanh.hung@msn.com",
                 NormalizedEmail = "dangmanh.hung@msn.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "10t031976@"),
+                PasswordHash = hasher.HashPassword(null, "Admin@123"),
                 SecurityStamp = string.Empty,
                 FirtName = "Hung",
                 LastName = "Dang",
