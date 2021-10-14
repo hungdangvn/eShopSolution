@@ -1,0 +1,67 @@
+﻿@model eShopSolution.ViewModels.Catalog.Products.CategoryAssignRequest
+
+@{
+    ViewData["Title"] = "Category Assign";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Gán danh mục cho sản phẩm</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Gán danh mục cho sản phẩm</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Index" asp-controller="Product">Danh sách sản phẩm</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>}
+            </div>
+            <div class="row">
+                <form asp-action="CategoryAssign">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" /> @*id cua product tu trang index truyen qua*@
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Tên danh mục</th>
+                                    <th>Đã gán/chưa gán</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 0; i < Model.Categories.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@Model.Categories[i].Name</td>
+                                        <td>
+                                            <input type="checkbox" asp-for="Categories[i].Selected" />
+                                            <input type="hidden" asp-for="Categories[i].Id" />
+                                            <input type="hidden" asp-for="Categories[i].Name" />
+                                        </td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Lưu lại" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

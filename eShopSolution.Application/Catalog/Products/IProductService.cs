@@ -21,7 +21,7 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<bool> UpdateStock(int productId, int addedQuantity);
 
-        Task AddViewCount(int productId);       
+        Task AddViewCount(int productId);
 
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
@@ -35,7 +35,8 @@ namespace eShopSolution.Application.Catalog.Products
 
         Task<ProductImageViewModel> GetImageById(int imageId);
 
-        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string langguageId, GetPublicProductPagingRequest request);        
+        Task<PagedResult<ProductViewModel>> GetAllByCategoryId(string langguageId, GetPublicProductPagingRequest request);
 
+        Task<ApiResult<bool>> CategoryAssisgn(int id, CategoryAssignRequest request);
     }
 }
