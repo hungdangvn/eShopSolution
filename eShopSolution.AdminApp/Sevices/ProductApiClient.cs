@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Sevices
@@ -78,6 +79,34 @@ namespace eShopSolution.AdminApp.Sevices
 
             var response = await client.PostAsync($"/api/products", requestContent); //Gửi request cho API
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<ApiResult<bool>> CategoryAssignForProduct(int id, CategoryAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions); //Gán Token vào Thuộc tính Authorization của RequestHeader
+
+            var json = JsonConvert.SerializeObject(request); //Chuyển request thành dạng json
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/products/{id}/categories", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiResultSuccess<bool>>(result);
+            }
+
+            return JsonConvert.DeserializeObject<ApiResultError<bool>>(result);
+        }
+
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        {
+            var data = await GetAsync<ProductViewModel>(
+                $"/api/products/{productId}/{languageId}");
+
+            return data;
         }
     }
 }
