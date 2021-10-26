@@ -215,4 +215,10 @@
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать</value>
   </data>
+  <data name="productUrl" xml:space="preserve">
+    <value>продукты</value>
+  </data>
+  <data name="categoryUrl" xml:space="preserve">
+    <value>категории</value>
+  </data>
 </root>

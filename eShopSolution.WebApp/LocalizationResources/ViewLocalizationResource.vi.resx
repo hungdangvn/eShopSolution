@@ -126,6 +126,9 @@
   <data name="ADDRESSES" xml:space="preserve">
     <value>ĐỊA CHỈ</value>
   </data>
+  <data name="categoryUrl" xml:space="preserve">
+    <value>danh-muc</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Liên hệ</value>
     <comment>Layout</comment>
@@ -183,6 +186,9 @@
   </data>
   <data name="Product name" xml:space="preserve">
     <value>Tên sản phẩm</value>
+  </data>
+  <data name="productUrl" xml:space="preserve">
+    <value>san-pham</value>
   </data>
   <data name="REGISTRATION" xml:space="preserve">
     <value>ĐĂNG KÝ</value>

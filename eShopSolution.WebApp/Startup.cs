@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +12,8 @@ using LazZiya.ExpressLocalization;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using eShopSolution.WebApp.LocalizationResources;
+using eShopSolution.ApiIntergration;
+using Microsoft.AspNetCore.Http;
 
 namespace eShopSolution.WebApp
 {
@@ -27,6 +29,8 @@ namespace eShopSolution.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient(); //Add service de thuc hien co che client - server
+
             var cultures = new[]
             {
                 new CultureInfo("vi"),
@@ -64,6 +68,17 @@ namespace eShopSolution.WebApp
                         o.DefaultRequestCulture = new RequestCulture("vi");
                     };
                 });
+            //Do dung chung API nen van phai co session
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);//You can set Time
+            });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //De lay HttpContext
+            services.AddTransient<ISlideApiClient, SlideApiClient>();
+
+            services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,9 +100,37 @@ namespace eShopSolution.WebApp
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSession(); //Do dung chung API nen van phai co session
+
             app.UseRequestLocalization();
             app.UseEndpoints(endpoints =>
             {
+                //rewrite Url Set routing cho Category
+                endpoints.MapControllerRoute(
+                    name: "Product Category En",
+                    pattern: "{culture}/categories/{id}", new { controller = "Product", action = "Category" });
+
+                endpoints.MapControllerRoute(
+                   name: "Product Category Vn",
+                   pattern: "{culture}/danh-muc/{id}", new { controller = "Product", action = "Category" });
+
+                endpoints.MapControllerRoute(
+                   name: "Product Category Ru",
+                   pattern: "{culture}/категории/{id}", new { controller = "Product", action = "Category" });
+
+                //Set routing cho Product detail
+                endpoints.MapControllerRoute(
+                   name: "Product Detail En",
+                   pattern: "{culture}/products/{id}", new { controller = "Product", action = "Detail" });
+
+                endpoints.MapControllerRoute(
+                   name: "Product Detail Vn",
+                   pattern: "{culture}/san-pham/{id}", new { controller = "Product", action = "Detail" });
+
+                endpoints.MapControllerRoute(
+                   name: "Product Detail Ru",
+                   pattern: "{culture}/продукты/{id}", new { controller = "Product", action = "Detail" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{culture=vi}/{controller=Home}/{action=Index}/{id?}");

@@ -40,6 +40,24 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(product);
         }
 
+        [HttpGet("featured/{languageId}/{take}")] //Nếu các method trùng tên nên đặt các alias để phân biệt
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(string languageId, int take)
+        {
+            var products = await _productService.GetFeaturedProducts(languageId, take);
+            if (products == null) return BadRequest("Cannot find product");
+            return Ok(products);
+        }
+
+        [HttpGet("lastest/{languageId}/{take}")] //Nếu các method trùng tên nên đặt các alias để phân biệt
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLastestProducts(string languageId, int take)
+        {
+            var products = await _productService.GetLastestProducts(languageId, take);
+            if (products == null) return BadRequest("Cannot find product");
+            return Ok(products);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")] // Phuong thuc nhan parameter multipart trong đó có trường dữ liệu là kiểu file
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request) // Sử dụng thuộc tính [FromForm] để lấy được parameters từ trền form của Swagger
