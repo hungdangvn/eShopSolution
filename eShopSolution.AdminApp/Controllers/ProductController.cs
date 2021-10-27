@@ -117,5 +117,46 @@ namespace eShopSolution.AdminApp.Controllers
             }
             return categoryAssignRequest;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var product = await _productApiClient.GetById(id, languageId);
+            if (product != null)
+            {
+                var updateRequest = new ProductUpdateRequest()
+                {
+                    Id = product.Id,
+                    Description = product.Description,
+                    Details = product.Details,
+                    SeoAlias = product.SeoAlias,
+                    Name = product.Name,
+                    SeoTitle = product.SeoTitle,
+                    SeoDescription = product.SeoDescription,
+                    IsFeatured = product.IsFeatured
+                };
+                return View(updateRequest); //Load dữ liệu ra
+            }
+            return RedirectToAction("Error", "Product");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")] //// Phuong thuc nhan parameter multipart trong đó có trường dữ liệu là kiểu file
+        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+
+            var result = await _productApiClient.UpdateProduct(request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật sản phẩm " + request.Name + " thành công";
+                return RedirectToAction("Index"); //Neu regist thanh cong thì Redirect
+            }
+            ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");//show error msg tu API
+            return View(request);
+        }
     }
 }

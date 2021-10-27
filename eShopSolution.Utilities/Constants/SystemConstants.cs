@@ -20,5 +20,10 @@ namespace eShopSolution.Utilities.Constants
             public const int NumberOfFeaturedProducts = 8;
             public const int NumberOfLastestProducts = 6;
         }
+
+        public class ProductConstants
+        {
+            public const string NA = "N/A";
+        }
     }
 }

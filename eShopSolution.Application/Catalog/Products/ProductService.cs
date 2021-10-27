@@ -13,6 +13,7 @@ using System.Net.Http.Headers;
 using System.IO;
 using eShopSolution.Application.Common;
 using eShopSolution.ViewModels.Catalog.ProductImages;
+using eShopSolution.Utilities.Constants;
 
 namespace eShopSolution.Application.Catalog.Products
 {
@@ -137,17 +138,13 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
-            var product = new Product()
+            var languages = _context.Languages;
+            var productTranslations = new List<ProductTranslation>();
+            foreach (var language in languages)
             {
-                Price = request.Price,
-                OriginalPrice = request.OriginalPrice,
-                Stock = request.Stock,
-                ViewCount = 0,
-                SeoAlias = request.SeoAlias,
-                DateCreated = DateTime.Now,
-                ProductTranslations = new List<ProductTranslation>()
+                if (language.Id == request.LanguageId) //Neu la current language
                 {
-                    new ProductTranslation ()
+                    productTranslations.Add(new ProductTranslation()
                     {
                         Name = request.Name,
                         Description = request.Description,
@@ -156,8 +153,28 @@ namespace eShopSolution.Application.Catalog.Products
                         SeoAlias = request.SeoAlias,
                         SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId
-                    }
+                    });
                 }
+                else //Neu khong la current language thi van tao ProductTranslation cho product
+                {
+                    productTranslations.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
+            var product = new Product()
+            {
+                Price = request.Price,
+                OriginalPrice = request.OriginalPrice,
+                Stock = request.Stock,
+                ViewCount = 0,
+                SeoAlias = request.SeoAlias,
+                DateCreated = DateTime.Now,
+                ProductTranslations = productTranslations
             };
             //Save image
             if (request.ThumbnailImage != null)

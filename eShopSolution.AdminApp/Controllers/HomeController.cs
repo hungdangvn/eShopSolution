@@ -16,7 +16,7 @@ namespace eShopSolution.AdminApp.Controllers
 
         /***
          * ViewComponent Navigator/Default post về server, kèm theo NavigationViewModel có giá trị CurrentLanguageId
-         *
+         * và ReturnUrl
          *
          */
 
@@ -24,7 +24,7 @@ namespace eShopSolution.AdminApp.Controllers
         public IActionResult Language(NavigationViewModel navigationViewModel)
         {
             HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, navigationViewModel.CurrentLanguageId); //Thay đổi DefaultLanguageId trong Session theo giá trị navigationViewModel.CurrentLanguageI
-            return RedirectToAction("Index", "User");
+            return Redirect(navigationViewModel.ReturnUrl);
         }
     }
 }
