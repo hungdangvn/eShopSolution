@@ -25,6 +25,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpGet("{paging}")]     //Nếu các method trùng tên nên đặt các alias để phân biệt
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request) //Ham GET nen thuộc tính [FromQuery] chi dinh lay tham so tu URL
         {
             var products = await _productService.GetAllPaging(request);

@@ -25,5 +25,12 @@ namespace eShopSolution.BackendApi.Controllers
             var categories = await _categoryService.GetAll(languageId);
             return Ok(categories);
         }
+
+        [HttpGet("{id}/{languageId}")]     //Nếu các method trùng tên nên đặt các alias để phân biệt
+        public async Task<IActionResult> GetByID(string languageId, int id) //Ham GET nen thuộc tính [FromQuery] chi dinh lay tham so tu URL
+        {
+            var categories = await _categoryService.GetById(languageId, id);
+            return Ok(categories);
+        }
     }
 }
