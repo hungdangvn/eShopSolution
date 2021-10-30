@@ -150,6 +150,10 @@
     <value>Sản phẩm nổi bật</value>
     <comment>/Home/Index</comment>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Trang chủ</value>
+    <comment>Common</comment>
+  </data>
   <data name="INFORMATION" xml:space="preserve">
     <value>THÔNG TIN</value>
   </data>

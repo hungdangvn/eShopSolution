@@ -22,5 +22,7 @@ namespace eShopSolution.ApiIntergration
         Task<List<ProductViewModel>> GetLastestProducts(string languageId, int take);
 
         Task<bool> UpdateProduct(ProductUpdateRequest request);
+
+        Task<bool> DeleteProduct(int id);
     }
 }

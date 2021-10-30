@@ -158,5 +158,37 @@ namespace eShopSolution.AdminApp.Controllers
             ModelState.AddModelError("", "Cập nhật sản phẩm thất bại");//show error msg tu API
             return View(request);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+            var result = await _productApiClient.GetById(id, languageId); //Tim product theo id de load len form
+            if (result != null)
+            {
+                var deleteRequest = new ProductDeleteRequest()
+                {
+                    Id = result.Id,
+                    Name = result.Name
+                };
+                return View(deleteRequest); //Load dữ liệu ra
+            }
+
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductDeleteRequest request)
+        {
+            if (!ModelState.IsValid) return View();
+            var result = await _productApiClient.DeleteProduct(request.Id);
+            if (result)
+            {
+                TempData["result"] = "Xóa sản phẩm thành công";
+                return RedirectToAction("Index"); //Neu delete thanh cong thì Redirect
+            }
+            ModelState.AddModelError("", "Xoó sản phẩm thất bại");
+            return View(result);
+        }
     }
 }

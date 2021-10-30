@@ -34,6 +34,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //https://localhost:5001/api/Products/1/vi
         [HttpGet("{productId}/{languageId}")] //Nếu các method trùng tên nên đặt các alias để phân biệt
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int productId, string languageId)
         {
             var product = await _productService.GetById(productId, languageId);

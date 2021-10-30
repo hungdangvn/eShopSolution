@@ -221,4 +221,7 @@
   <data name="categoryUrl" xml:space="preserve">
     <value>категории</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Домашняя страница</value>
+  </data>
 </root>

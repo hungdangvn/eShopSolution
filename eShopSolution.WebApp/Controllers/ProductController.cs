@@ -20,9 +20,14 @@ namespace eShopSolution.WebApp.Controllers
             _categoryApiClient = categoryApiClient;
         }
 
-        public IActionResult Detail()
+        public async Task<IActionResult> Detail(int id, string culture)
         {
-            return View();
+            var product = await _productApiClient.GetById(id, culture);
+            return View(new ProductDetailViewModel()
+            {
+                Product = product,
+                Category = await _categoryApiClient.GetById(culture, id)
+            });
         }
 
         public async Task<IActionResult> Category(int id, string culture, int page = 1)
@@ -32,7 +37,7 @@ namespace eShopSolution.WebApp.Controllers
                 CategoryId = id,
                 LanguageId = culture,
                 PageIndex = page,
-                PageSize = 6
+                PageSize = 3
             });
 
             return View(new ProductCategoryViewModel()
