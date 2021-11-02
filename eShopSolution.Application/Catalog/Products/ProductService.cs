@@ -21,7 +21,7 @@ namespace eShopSolution.Application.Catalog.Products
     {
         private readonly eShopDbContext _context;
         private readonly IStorageService _storageService;
-
+        private const string USER_CONTENT_FOLDER_NAME = "user-content";
         public ProductService(eShopDbContext context, IStorageService storageService)
         {
             _context = context;
@@ -272,6 +272,7 @@ namespace eShopSolution.Application.Catalog.Products
                                     join pic in _context.ProductInCategories on c.Id equals pic.CategoryId
                                     where pic.ProductId == productId && ct.LanguageId == languageId
                                     select ct.Name).ToListAsync();
+            var image = await _context.ProductImages.Where(x => x.ProductId == productId && x.IsDefault == true).FirstOrDefaultAsync();
             //2. Map vao obj ProductViewModel
             var productVM = await query.Select(x => new ProductViewModel()
             {
@@ -288,7 +289,8 @@ namespace eShopSolution.Application.Catalog.Products
                 SeoTitle = x.pt.SeoTitle,
                 Stock = x.p.Stock,
                 ViewCount = x.p.ViewCount,
-                Categories = categories
+                Categories = categories,
+                ThumbnailImage = image != null? image.ImagePath: "/USER_CONTENT_FOLDER_NAME/no-image.png"
             }).FirstOrDefaultAsync();
 
             return productVM;
@@ -304,7 +306,7 @@ namespace eShopSolution.Application.Catalog.Products
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return fileName;
+            return "/"+USER_CONTENT_FOLDER_NAME+"/" + fileName;
         }
 
         public async Task<int> AddImage(int productId, ProductImageCreateRequest request)

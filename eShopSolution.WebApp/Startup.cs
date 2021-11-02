@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Localization;
 using eShopSolution.WebApp.LocalizationResources;
 using eShopSolution.ApiIntergration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace eShopSolution.WebApp
 {
@@ -30,6 +31,13 @@ namespace eShopSolution.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient(); //Add service de thuc hien co che client - server
+            //Setting Authen de neu user chua dang nhap thi chuyen ve /Login/Index
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login"; //Neu chua dang nhap thi bi Redirect ve duong dan nay
+                    options.AccessDeniedPath = "/User/Forbidden";
+                });
 
             var cultures = new[]
             {
@@ -79,6 +87,8 @@ namespace eShopSolution.WebApp
 
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,8 +107,8 @@ namespace eShopSolution.WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseSession(); //Do dung chung API nen van phai co session
 

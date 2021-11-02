@@ -225,4 +225,7 @@
     <value>Home</value>
     <comment>Common</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
 </root>

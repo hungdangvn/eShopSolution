@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Chi tiết";
     var culture = CultureInfo.CurrentCulture;
-    const string USER_CONTENT_FOLDER_NAME = "/user-content/";
+    //const string USER_CONTENT_FOLDER_NAME = "/user-content/";
 }
 @inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
 @inject Microsoft.Extensions.Configuration.IConfiguration _configuration;
@@ -15,7 +15,7 @@
 <div class="row">
     <div id="gallery" class="span3">
         <a href="themes/images/products/large/f1.jpg" title="@Model.Product.Name">
-            <img src="themes/images/products/large/3.jpg" style="width:100%" alt="Fujifilm FinePix S2950 Digital Camera" />
+            <img src="@(_configuration["BaseAddress"]+Model.Product.ThumbnailImage)" style="width:100%" alt="@Model.Product.Name" />
         </a>
         <div id="differentview" class="moreOptopm carousel slide">
             <div class="carousel-inner">

@@ -136,7 +136,7 @@
     <value>Последние продукты</value>
   </data>
   <data name="Login" xml:space="preserve">
-    <value>вход</value>
+    <value>Вход</value>
     <comment>Layout</comment>
   </data>
   <data name="Specials Offer" xml:space="preserve">
@@ -223,5 +223,8 @@
   </data>
   <data name="Home" xml:space="preserve">
     <value>Домашняя страница</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Выйти</value>
   </data>
 </root>

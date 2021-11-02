@@ -167,6 +167,9 @@
     <value>Đăng nhập</value>
     <comment>Layout</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Đăng xuất</value>
+  </data>
   <data name="MANUFACTURERS" xml:space="preserve">
     <value>NHÀ SẢN XUẤT</value>
   </data>
