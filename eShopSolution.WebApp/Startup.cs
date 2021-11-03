@@ -15,6 +15,8 @@ using eShopSolution.WebApp.LocalizationResources;
 using eShopSolution.ApiIntergration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using FluentValidation.AspNetCore;
+using eShopSolution.ViewModels.System.Users;
 
 namespace eShopSolution.WebApp
 {
@@ -47,6 +49,8 @@ namespace eShopSolution.WebApp
             };
 
             services.AddControllersWithViews()
+                .AddFluentValidation //AddFluentValidation để bắt Validation các ModelView
+                (fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
                     // When using all the culture providers, the localization process will

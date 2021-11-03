@@ -41,7 +41,11 @@
                 {
                     <div class="span6"><localize>Welcome</localize>!<strong> @User.Identity.Name</strong></div>
                 }
-                
+                else
+                {
+                    <div class="span6"><localize>Welcome</localize>!<strong> Guest</strong></div>
+                }
+
                 <div class="span6">
                     <div class="pull-right">
                         <a href="/en/Home/SetCultureCookie?cltr=en&returnUrl=/en">
@@ -144,7 +148,7 @@
                 <div class="span3">
                     <h5><localize>INFORMATION</localize></h5>
                     <a href="contact.html"><localize>CONTACT</localize></a>
-                    <a href="register.html"><localize>REGISTRATION</localize></a>
+                    <a href="/@culture/Account/Register"><localize>REGISTRATION</localize></a>
                     <a href="legal_notice.html"><localize>LEGAL NOTICE</localize></a>
                     <a href="tac.html"><localize>TERMS AND CONDITIONS</localize></a>
                     <a href="faq.html"><localize>FAQ</localize></a>
