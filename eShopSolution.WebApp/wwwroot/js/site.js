@@ -14,7 +14,7 @@ var SiteController = function () {
             type: "GET",
             url: "/" + culture + '/Cart/GetListItems',
             success: function (res) {
-                $('#lbl_number_of_items_header').text(res.length)
+                $('#lbl_number_of_items').text(res.length)
             }
         });
     }
