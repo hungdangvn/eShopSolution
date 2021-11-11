@@ -10,6 +10,7 @@ namespace eShopSolution.Data.Enums
         Confirmed,
         Shipping,
         Success,
-        Canceled
+        Canceled,
+        Pending
     }
 }

@@ -1,0 +1,98 @@
+﻿@model CheckoutViewModel
+@{
+    ViewData["Title"] = "Checkout";
+    var culture = CultureInfo.CurrentCulture;
+}
+@inject Microsoft.Extensions.Configuration.IConfiguration _configuration;
+
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li class="active"> SHOPPING CART</li>
+</ul>
+
+<h3>
+    SHOPPING CART [ <small>@Model.CartItems.Count Item(s) </small>]
+    <a href="/" class="btn btn-large pull-right"><i class="icon-arrow-left"></i> Continue Shopping </a>
+</h3>
+<hr class="soft" />
+<div class="container" style="margin-bottom:10px">
+    @if (TempData["LoginRequired"] != null)
+    {
+        <span class="alert alert-danger">@TempData["LoginRequired"]</span>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <span class="alert alert-success">@TempData["Success"]</span>
+    }
+</div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td> <img width="60" src="@(_configuration["BaseAddress"]+item.Image)" alt="@item.Name" /></td>
+                    <td>@item.Description</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price</td>
+                    <td>@(item.Quantity*item.Price)</td>
+                </tr>
+            }
+
+            <tr>
+                <td colspan="4" style="text-align:right"><strong>TOTAL ($228 - $50 + $31) =</strong></td>
+                <td class="label label-important" style="display:block"> <strong> @Model.CartItems.Sum(x => x.Quantity * x.Price).ToString("C", culture) </strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered">
+        <tr><th>ESTIMATE YOUR SHIPPING </th></tr>
+        <tr>
+            <td>
+                <form class="form-horizontal" action="/@culture/Cart/Checkout" method="post">
+                    <div class="control-group">
+                        <label class="control-label" for="inputName">Name </label>
+                        <div class="controls">
+                            <input type="text" id="inputName" asp-for="CheckoutRequest.Name" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputAdress">Address </label>
+                        <div class="controls">
+                            <input type="text" id="inputAdress" asp-for="CheckoutRequest.Address" placeholder="Address">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">Email </label>
+                        <div class="controls">
+                            <input type="text" id="inputEmail" asp-for="CheckoutRequest.Email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPhoneNumber">Phone number </label>
+                        <div class="controls">
+                            <input type="text" id="inputPhoneNumber" asp-for="CheckoutRequest.PhoneNumber" placeholder="PhoneNumber">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">PURCHASE </button>
+                        </div>
+                    </div>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+
+
+    <a href="/" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>

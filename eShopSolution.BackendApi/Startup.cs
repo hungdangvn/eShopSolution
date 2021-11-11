@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Application.Catalog.Categories;
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
+using eShopSolution.Application.Sales;
 using eShopSolution.Application.System.Languages;
 using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
@@ -62,6 +63,8 @@ namespace eShopSolution.BackendApi
             services.AddTransient<ILanguageService, LanguageService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ISlideService, SlideService>();
+            services.AddTransient<IOrderService, OrderService>();
+
             // Dang ky dich vu cho các Validator
 
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();// Dang ky service cho Validator, In order for ASP.NET to discover your validators, they must be registered with the services collection. You can either do this by calling the AddTransient method for each of your validators

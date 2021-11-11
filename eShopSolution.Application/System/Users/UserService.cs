@@ -48,6 +48,7 @@ namespace eShopSolution.Application.System.Users
             //Tao thong tin để đẩy thong tin vao Token
             var claims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.GivenName, user.FirtName),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)), //noi danh sach cac roles
@@ -227,5 +228,6 @@ namespace eShopSolution.Application.System.Users
 
             return new ApiResultSuccess<bool>();
         }
+
     }
 }
