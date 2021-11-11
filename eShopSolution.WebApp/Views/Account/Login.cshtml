@@ -1,0 +1,50 @@
+﻿@model eShopSolution.ViewModels.System.Users.LoginRequest
+@{
+    var culture = CultureInfo.CurrentCulture.Name;
+}
+
+<ul class="breadcrumb">
+    <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+    <li class="active">Login</li>
+</ul>
+<h3> Login</h3>
+<hr class="soft" />
+
+<div class="row">
+    <div class="span4">
+        <div class="well">
+            <h5>CREATE YOUR ACCOUNT</h5><br />
+            Enter your e-mail address to create an account.<br /><br /><br />
+            <div class="controls">
+                <a href="/@culture/Account/Register" type="submit" class="btn block">Create Your Account</a>
+            </div>
+        </div>
+    </div>
+    <div class="span1"> &nbsp;</div>
+    <div class="span4">
+        <div class="well">
+            <h5>ALREADY REGISTERED ?</h5>
+            <form action="/@culture/Account/Login" method="post">
+                <div class="control-group">
+                    <label class="control-label" asp-for="UserName">UserName</label>
+                    <div class="controls">
+                        <input class="span3" type="text" asp-for="UserName" placeholder="User Name">
+                        <span asp-validation-for="UserName" class="text-error"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" asp-for="Password">Password</label>
+                    <div class="controls">
+                        <input type="password" class="span3" asp-for="Password" placeholder="Password">
+                        <span asp-validation-for="Password" class="text-error"></span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Sign in</button> <a href="forgetpass.html">Forget password?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
